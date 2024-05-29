@@ -10,8 +10,8 @@ public:
     Pair(const Pair &p) = default;
     ~Pair() = default;
 
-    Pair &operator=(const Pair &p) = default;
-    bool operator==(const Pair &p) = default;
+    Pair &operator=(const Pair &p) const = default;
+    bool operator==(const Pair &p) const = default;
 
     bool operator<(const Pair &p) const
     {
