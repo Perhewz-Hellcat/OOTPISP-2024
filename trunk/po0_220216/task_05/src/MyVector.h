@@ -53,7 +53,7 @@ void MyVector<T>::Add(const T &a)
 template <class T>
 void MyVector<T>::putMinToEnd()
 {
-    auto min_it = std::min_element(_vec.begin(), _vec.end());
+    auto min_it = std::ranges::min_element(_vec.begin(), _vec.end());
     if (min_it != _vec.end())
     {
         T min_val = *min_it;
@@ -65,7 +65,7 @@ void MyVector<T>::putMinToEnd()
 template <class T>
 void MyVector<T>::findByKeyAndDelete(T key)
 {
-    auto it = std::find(_vec.begin(), _vec.end(), key);
+    auto it = std::ranges::find(_vec.begin(), _vec.end(), key);
     if (it != _vec.end())
     {
         _vec.erase(it);
@@ -77,7 +77,7 @@ void MyVector<T>::addAllMinMaxSum()
 {
     if (_vec.empty())
         return;
-    auto [min_it, max_it] = std::minmax_element(_vec.begin(), _vec.end());
+    auto [min_it, max_it] = std::ranges::minmax_element(_vec.begin(), _vec.end());
     T sum = *min_it + *max_it;
     for (auto &elem : _vec)
     {

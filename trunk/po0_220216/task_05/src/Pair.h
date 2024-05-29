@@ -11,10 +11,7 @@ public:
     ~Pair() = default;
 
     Pair &operator=(const Pair &p) = default;
-    bool operator==(const Pair &p) const
-    {
-        return (first == p.first) && (second == p.second);
-    }
+    bool operator==(const Pair &p) = default;
 
     bool operator<(const Pair &p) const
     {
