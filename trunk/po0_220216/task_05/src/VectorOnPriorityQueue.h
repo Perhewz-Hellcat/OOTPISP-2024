@@ -77,20 +77,20 @@ void VectorOnPriorityQueue<T>::print() const
     std::cout << "}" << std::endl;
 }
 
-template <class T>
-std::vector<T> VectorOnPriorityQueue<T>::toVector() const
+template <typename T>
+void VectorOnPriorityQueue<T>::addElementAtPosition(const T &key, int position)
 {
-    std::vector<T> vec;
-    std::priority_queue<T> tempQueue = elements;
+    std::vector<T> vec = toVector();
+    auto it = std::ranges::find(vec.begin(), vec.end(), key);
 
-    while (!tempQueue.empty())
-    {
-        vec.push_back(tempQueue.top());
-        tempQueue.pop();
-    }
+    if (it == vec.end())
+        return;
 
-    std::ranges::reverse(vec.begin(), vec.end());
-    return vec;
+    if (position < 0 || position > vec.size())
+        return;
+
+    vec.insert(vec.begin() + position, *it);
+    fromVector(vec);
 }
 
 template <typename T>
