@@ -115,7 +115,7 @@ void Vector<T>::subtractMaxMinDifference()
         return;
 
     auto [minElem, maxElem] = std::ranges::minmax(*elements | std::views::take(currLength));
-    T difference = *maxElem - *minElem;
+    T difference = maxElem - minElem;
 
     std::ranges::for_each(*elements | std::views::take(currLength), [difference](T &elem)
                           { elem -= difference; });
