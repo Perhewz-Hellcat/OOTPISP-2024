@@ -45,7 +45,7 @@ void Vector<T>::app(const T &other)
         maxSize *= 2;
     }
     (*elements)[currLength] = other;
-    currLength++
+    currLength++;
 }
 
 template <typename T>
