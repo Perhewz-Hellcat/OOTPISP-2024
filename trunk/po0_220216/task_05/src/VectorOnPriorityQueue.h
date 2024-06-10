@@ -126,7 +126,7 @@ std::vector<T> VectorOnPriorityQueue<T>::toVector() const
         temp.pop();
     }
 
-    std::ranges::reverse(vec);
+    std::ranges::reverse(vect);
     return vec;
 }
 
