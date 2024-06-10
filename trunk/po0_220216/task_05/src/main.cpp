@@ -95,7 +95,7 @@ void adjustElementsByDifference(std::queue<T> &q)
 
         for (auto &elem : elements)
         {
-            elem -= difference;
+            elem = elem - difference;
         }
 
         for (const auto &elem : elements)
