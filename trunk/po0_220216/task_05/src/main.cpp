@@ -109,10 +109,10 @@ int main()
 {
     // TASK_1
 
-    std::deque<double> doubleDeque = {1.5, 2.9, 4.4, 3.7};
+    std::deque<double> doubleDeque = {1.3, 2.8, 4.3, 3.6};
 
-    insertElementAtPosition(doubleDeque, 2.9, 3);
-    removeElementFromDeque(doubleDeque, 1.5);
+    insertElementAtPosition(doubleDeque, 2.8, 4);
+    removeElementFromDeque(doubleDeque, 1.4);
     adjustElementsByDifference(doubleDeque);
 
     for (const auto &elem : doubleDeque)
@@ -125,23 +125,23 @@ int main()
     // TASK_3
 
     Vector<int> Vect;
-    Vect.app(5);
-    Vect.app(0);
-    Vect.app(7);
-    Vect.app(4);
+    Vect.app(6);
+    Vect.app(1);
     Vect.app(8);
+    Vect.app(5);
+    Vect.app(9);
 
-    Vect.insertElementAtPosition(7, 3);
-    Vect.eraseElement(7);
+    Vect.insertElementAtPosition(8, 4);
+    Vect.eraseElement(8);
     Vect.subtractMaxMinDifference();
     Vect.print();
 
     // TASK_2
 
-    std::deque<Time> timeDeque = {Time("11:54:16"), Time("17:23:10"), Time("4:35:25"), Time("20:00:00")};
+    std::deque<Time> timeDeque = {Time("11:52:16"), Time("17:52:10"), Time("4:52:25"), Time("20:52:00")};
 
-    insertElementAtPosition(timeDeque, Time("11:54:16"), 3);
-    removeElementFromDeque(timeDeque, Time("17:23:10"));
+    insertElementAtPosition(timeDeque, Time("11:52:16"), 3);
+    removeElementFromDeque(timeDeque, Time("17:52:10"));
     adjustElementsByDifference(timeDeque);
 
     for (const auto &elem : timeDeque)
@@ -154,13 +154,13 @@ int main()
 
     std::queue<Time> tim;
 
-    tim.push(Time("12:44:11"));
-    tim.push(Time("14:44:12"));
-    tim.push(Time("1:48:10"));
-    tim.push(Time("23:00:00"));
+    tim.push(Time("12:52:11"));
+    tim.push(Time("14:52:12"));
+    tim.push(Time("1:52:10"));
+    tim.push(Time("23:52:00"));
 
-    insertElementAtPosition(tim, Time("14:44:12"), 2);
-    removeElement(tim, Time("12:44:11"));
+    insertElementAtPosition(tim, Time("14:52:12"), 2);
+    removeElement(tim, Time("12:52:11"));
     adjustElementsByDifference(tim);
 
     std::cout << "{ ";

@@ -33,45 +33,57 @@ private:
 };
 
 template <typename T>
+void VectorOnPriorityQueue<T>::application(const T &cost)
+{
+    objects.push(cost);
+}
+
+template <typename T>
+void VectorOnPriorityQueue<T>::subMinMax()
+{
+    if (objects.empty())
+        return;
+
+    std::vector<T> vec = toVector();
+    T min = *std::ranges::min_element(vec);
+    T max = *std::ranges::max_element(vec);
+
+    T diff = max - min;
+
+    for (auto &elem : vec)
+    {
+        elem = elem - diff;
+    }
+
+    fromVector(vec);
+}
+
+template <typename T>
 int VectorOnPriorityQueue<T>::sizeVec() const
 {
     return objects.size();
 }
 
 template <typename T>
-void VectorOnPriorityQueue<T>::application(const T &value)
+auto VectorOnPriorityQueue<T>::operator*(const T cost) const
 {
-    objects.push(value);
-}
-
-template <typename T>
-T VectorOnPriorityQueue<T>::front() const
-{
-    if (!objects.empty())
-        return objects.top();
-    return T();
-}
-
-template <typename T>
-auto VectorOnPriorityQueue<T>::operator*(const T value) const
-{
-    VectorOnPriorityQueue<T> newVector;
+    VectorOnPriorityQueue<T> newArr;
 
     for (const auto &elem : toVector())
     {
-        newVector.app(elem * value);
+        newArr.app(elem * cost);
     }
 
-    return newVector;
+    return newArr;
 }
 
 template <typename T>
 void VectorOnPriorityQueue<T>::show() const
 {
-    auto vec = toVector();
+    auto ourvec = toVector();
 
     std::cout << "{ ";
-    for (const auto &elem : vec)
+    for (const auto &elem : ourvec)
     {
         std::cout << elem << " ";
     }
@@ -81,17 +93,17 @@ void VectorOnPriorityQueue<T>::show() const
 template <typename T>
 void VectorOnPriorityQueue<T>::fold(const T &key, int position)
 {
-    std::vector<T> vec = toVector();
-    auto it = std::ranges::find(vec.begin(), vec.end(), key);
+    std::vector<T> ourvec = toVector();
+    auto it = std::ranges::find(ourvec.begin(), ourvec.end(), key);
 
-    if (it == vec.end())
+    if (it == ourvec.end())
         return;
 
-    if (position < 0 || position > vec.size())
+    if (position < 0 || position > ourvec.size())
         return;
 
-    vec.insert(vec.begin() + position, *it);
-    fromVector(vec);
+    ourvec.insert(ourvec.begin() + position, *it);
+    fromVector(ourvec);
 }
 
 template <typename T>
@@ -103,34 +115,15 @@ void VectorOnPriorityQueue<T>::deleteEl(const T &key)
 }
 
 template <typename T>
-void VectorOnPriorityQueue<T>::subMinMax()
-{
-    if (objects.empty())
-        return;
-
-    std::vector<T> vec = toVector();
-    T maxElement = *std::ranges::max_element(vec);
-    T minElement = *std::ranges::min_element(vec);
-    T difference = maxElement - minElement;
-
-    for (auto &elem : vec)
-    {
-        elem -= difference;
-    }
-
-    fromVector(vec);
-}
-
-template <typename T>
 std::vector<T> VectorOnPriorityQueue<T>::toVector() const
 {
-    std::vector<T> vec;
-    std::priority_queue<T> tempQueue = objects;
+    std::vector<T> vect;
+    std::priority_queue<T> temp = objects;
 
-    while (!tempQueue.empty())
+    while (!temp.empty())
     {
-        vec.push_back(tempQueue.top());
-        tempQueue.pop();
+        vect.push_back(temp.top());
+        temp.pop();
     }
 
     std::ranges::reverse(vec);
@@ -140,6 +133,14 @@ std::vector<T> VectorOnPriorityQueue<T>::toVector() const
 template <typename T>
 void VectorOnPriorityQueue<T>::fromVector(const std::vector<T> &vec)
 {
-    std::priority_queue<T> newPriorityQueue(vec.begin(), vec.end());
-    objects = std::move(newPriorityQueue);
+    std::priority_queue<T> newQue(vec.begin(), vec.end());
+    objects = std::move(newQue);
+}
+
+template <typename T>
+T VectorOnPriorityQueue<T>::front() const
+{
+    if (!objects.empty())
+        return objects.top();
+    return T();
 }
