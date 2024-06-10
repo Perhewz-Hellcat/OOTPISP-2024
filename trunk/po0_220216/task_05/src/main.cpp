@@ -185,5 +185,5 @@ int main()
     vectorOnPQ.deleteElm(6);
     vectorOnPQ.subtractMinMax();
 
-    vectorOnPQ.print();
+    vectorOnPQ.show();
 }

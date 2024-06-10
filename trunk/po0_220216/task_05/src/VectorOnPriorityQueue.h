@@ -18,7 +18,7 @@ public:
 
     T front() const;
     auto operator*(const T value) const;
-    void print() const;
+    void show() const;
 
     void addPos(const T &key, int position);
     void deleteElm(const T &key);
@@ -65,7 +65,7 @@ auto VectorOnPriorityQueue<T>::operator*(const T val) const
 }
 
 template <typename T>
-void VectorOnPriorityQueue<T>::print() const
+void VectorOnPriorityQueue<T>::show() const
 {
     auto vec = toVector();
 
