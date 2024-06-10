@@ -51,7 +51,7 @@ T VectorOnPriorityQueue<T>::front() const
     return T();
 }
 
-template <class T>
+template <typename T>
 auto VectorOnPriorityQueue<T>::operator*(const T value) const
 {
     VectorOnPriorityQueue<T> newVector;
