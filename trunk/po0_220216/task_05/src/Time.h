@@ -58,27 +58,65 @@ void Time::fromString(std::string_view timeString)
 
 Time Time::operator+(const Time &t) const
 {
-    int totalSec = (hours + t.hours) * SEC_IN_HOUR + (minutes + t.minutes) * SEC_IN_MIN + (seconds + t.seconds);
-    int hrs = totalSec / SEC_IN_HOUR;
-    int mins = (totalSec % SEC_IN_HOUR) / SEC_IN_MIN;
-    int secs = totalSec % SEC_IN_MIN;
-    return Time(std::to_string(hrs) + ":" + std::to_string(mins) + ":" + std::to_string(secs));
+    Time result;
+    result.seconds = this->seconds + t.seconds;
+    result.minutes = this->minutes + t.minutes + result.seconds / SEC_IN_MIN;
+    result.hours = this->hours + t.hours + result.minutes / SEC_IN_MIN;
+    result.minutes %= SEC_IN_MIN;
+    result.seconds %= SEC_IN_MIN;
+
+    if (result.hours > 24)
+        result.hours -= 24;
+
+    if (result.minutes > SEC_IN_MIN)
+    {
+        result.minutes -= SEC_IN_MIN;
+        result.hours += 1;
+    }
+
+    if (result.seconds > SEC_IN_MIN)
+    {
+        result.seconds -= SEC_IN_MIN;
+        result.minutes += 1;
+    }
+
+    return result;
 }
 
-Time Time::operator/(int divisor) const
+Time Time::operator/(const int t) const
 {
-    int totalSec = (hours * SEC_IN_HOUR + minutes * SEC_IN_MIN + seconds) / divisor;
-    int hrs = totalSec / SEC_IN_HOUR;
-    int mins = (totalSec % SEC_IN_HOUR) / SEC_IN_MIN;
-    int secs = totalSec % SEC_IN_MIN;
-    return Time(std::to_string(hrs) + ":" + std::to_string(mins) + ":" + std::to_string(secs));
+    int secCount = this->hours * SEC_IN_HOUR + this->minutes * SEC_IN_MIN + this->seconds;
+    secCount /= t;
+    Time result;
+
+    result.hours = secCount / SEC_IN_HOUR;
+    result.minutes = (secCount % SEC_IN_HOUR) / SEC_IN_MIN;
+    result.seconds = secCount % SEC_IN_MIN;
+
+    return result;
 }
 
 Time Time::operator-(const Time &t) const
 {
-    int totalSec = (hours - t.hours) * SEC_IN_HOUR + (minutes - t.minutes) * SEC_IN_MIN + (seconds - t.seconds);
-    int hrs = totalSec / SEC_IN_HOUR;
-    int mins = (totalSec % SEC_IN_HOUR) / SEC_IN_MIN;
-    int secs = totalSec % SEC_IN_MIN;
-    return Time(std::to_string(hrs) + ":" + std::to_string(mins) + ":" + std::to_string(secs));
+    Time result;
+    result.seconds = this->seconds - t.seconds;
+    result.minutes = this->minutes - t.minutes;
+    result.hours = this->hours - t.hours;
+
+    if (result.seconds < 0)
+    {
+        result.seconds += SEC_IN_MIN;
+        result.minutes -= 1;
+    }
+
+    if (result.minutes < 0)
+    {
+        result.minutes += SEC_IN_MIN;
+        result.hours -= 1;
+    }
+
+    if (result.hours < 0)
+        result.hours += 24;
+
+    return result;
 }
