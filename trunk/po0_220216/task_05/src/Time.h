@@ -51,7 +51,7 @@ Time::Time(std::string_view timeString)
 
 void Time::fromString(std::string_view timeString)
 {
-    std::istringstream ss(std::string(timeString));
+    std::istringstream ss(std::string(timeString.data()));
     char delim;
     ss >> hours >> delim >> minutes >> delim >> seconds;
 }
