@@ -38,7 +38,7 @@ void adjustElementsByDifference(std::deque<T> &deq)
         T difference = *maxIt - *minIt;
 
         std::ranges::for_each(deq, [difference](T &elem)
-                              { elem = elem- difference; });
+                              { elem = elem - difference; });
     }
 }
 
@@ -122,6 +122,20 @@ int main()
 
     std::cout << std::endl;
 
+    // TASK_3
+
+    Vector<int> Vect;
+    Vect.app(5);
+    Vect.app(0);
+    Vect.app(7);
+    Vect.app(4);
+    Vect.app(8);
+
+    Vect.insertElementAtPosition(7, 3);
+    Vect.eraseElement(7);
+    Vect.subtractMaxMinDifference();
+    Vect.print();
+
     // TASK_2
 
     std::deque<Time> timeDeque = {Time("11:54:16"), Time("17:23:10"), Time("4:35:25"), Time("20:00:00")};
@@ -136,54 +150,39 @@ int main()
     }
 
     std::cout << std::endl;
-
-    // TASK_3
-
-    Vector<int> vector;
-    vector.app(5);
-    vector.app(0);
-    vector.app(7);
-    vector.app(4);
-    vector.app(8);
-
-    vector.insertElementAtPosition(7, 3);
-    vector.eraseElement(7);
-    vector.subtractMaxMinDifference();
-    vector.print();
-
     // TASK_4
 
-    std::queue<Time> timeQueueOfTC;
+    std::queue<Time> tim;
 
-    timeQueueOfTC.push(Time("12:44:11"));
-    timeQueueOfTC.push(Time("14:44:12"));
-    timeQueueOfTC.push(Time("1:48:10"));
-    timeQueueOfTC.push(Time("23:00:00"));
+    tim.push(Time("12:44:11"));
+    tim.push(Time("14:44:12"));
+    tim.push(Time("1:48:10"));
+    tim.push(Time("23:00:00"));
 
-    insertElementAtPosition(timeQueueOfTC, Time("14:44:12"), 2);
-    removeElement(timeQueueOfTC, Time("12:44:11"));
-    adjustElementsByDifference(timeQueueOfTC);
+    insertElementAtPosition(tim, Time("14:44:12"), 2);
+    removeElement(tim, Time("12:44:11"));
+    adjustElementsByDifference(tim);
 
     std::cout << "{ ";
-    while (!timeQueueOfTC.empty())
+    while (!tim.empty())
     {
-        std::cout << timeQueueOfTC.front() << " ";
-        timeQueueOfTC.pop();
+        std::cout << tim.front() << " ";
+        tim.pop();
     }
     std::cout << "}" << std::endl;
 
     // TASK_5
 
-    VectorOnPriorityQueue<int> vectorOnPQ;
-    vectorOnPQ.app(1);
-    vectorOnPQ.app(6);
-    vectorOnPQ.app(9);
-    vectorOnPQ.app(11);
-    vectorOnPQ.app(18);
+    VectorOnPriorityQueue<int> vect;
+    vect.application(2);
+    vect.application(7);
+    vect.application(8);
+    vect.application(10);
+    vect.application(52);
 
-    vectorOnPQ.addElementAtPosition(9, 2);
-    vectorOnPQ.removeElement(6);
-    vectorOnPQ.subtractDifferenceMaxMin();
+    vect.fold(7, 1);
+    vect.deleteEl(8);
+    vect.subMinMax();
 
-    vectorOnPQ.print();
+    vect.show();
 }
