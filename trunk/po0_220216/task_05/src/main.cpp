@@ -1,101 +1,189 @@
 #include <iostream>
 #include <vector>
+#include <deque>
+#include <queue>
 #include <algorithm>
-#include "Pair.h"
-#include "MyVector.h"
-#include "MyQueue.h"
+#include <numeric>
+#include <optional>
+
+#include "Time.h"
+#include "Vector.h"
+#include "VectorOnPriorityQueue.h"
 
 template <typename T>
-void putMinToEnd(std::vector<T> &vec)
+void removeElementFromDeque(std::deque<T> &deq, const T &value)
 {
-    auto min_it = std::min_element(vec.begin(), vec.end());
-    if (min_it != vec.end())
+    auto it = std::ranges::find(deq, value);
+    if (it != deq.end())
     {
-        T min_val = *min_it;
-        vec.erase(min_it);
-        vec.push_back(min_val);
+        deq.erase(it);
     }
 }
 
 template <typename T>
-void findByKeyAndDelete(std::vector<T> &vec, const T &key)
+void insertElementAtPosition(std::deque<T> &deq, const T &value, size_t position)
 {
-    auto it = std::find(vec.begin(), vec.end(), key);
-    if (it != vec.end())
+    if (auto it = std::ranges::find(deq, value); it != deq.end() && position <= deq.size())
     {
-        vec.erase(it);
+        deq.insert(deq.begin() + position, *it);
     }
 }
 
 template <typename T>
-void addAllMinMaxSum(std::vector<T> &vec)
+void adjustElementsByDifference(std::deque<T> &deq)
 {
-    if (vec.empty())
-        return;
-    auto [min_it, max_it] = std::minmax_element(vec.begin(), vec.end());
-    T sum = *min_it + *max_it;
-    for (auto &elem : vec)
+    if (!deq.empty())
     {
-        elem = elem + sum;
+        auto [minIt, maxIt] = std::ranges::minmax_element(deq);
+        T difference = *maxIt - *minIt;
+
+        std::ranges::for_each(deq, [difference](T &elem)
+                              { elem -= difference; });
+    }
+}
+
+template <typename T>
+void insertElementAtPosition(std::queue<T> &q, const T &value, size_t position)
+{
+    std::vector<T> elements;
+    while (!q.empty())
+    {
+        elements.push_back(q.front());
+        q.pop();
+    }
+
+    if (auto it = std::ranges::find(elements, value); it != elements.end() && position <= elements.size())
+    {
+        elements.insert(elements.begin() + position, *it);
+    }
+
+    for (const auto &elem : elements)
+    {
+        q.push(elem);
+    }
+}
+
+template <typename T>
+void removeElement(std::queue<T> &q, const T &value)
+{
+    std::queue<T> tempQueue;
+    while (!q.empty())
+    {
+        if (q.front() != value)
+        {
+            tempQueue.push(q.front());
+        }
+        q.pop();
+    }
+    q = std::move(tempQueue);
+}
+
+template <typename T>
+void adjustElementsByDifference(std::queue<T> &q)
+{
+    if (!q.empty())
+    {
+        std::vector<T> elements;
+        while (!q.empty())
+        {
+            elements.push_back(q.front());
+            q.pop();
+        }
+
+        auto [minIt, maxIt] = std::ranges::minmax_element(elements);
+        T difference = *maxIt - *minIt;
+
+        for (auto &elem : elements)
+        {
+            elem -= difference;
+        }
+
+        for (const auto &elem : elements)
+        {
+            q.push(elem);
+        }
     }
 }
 
 int main()
 {
-    std::cout << "Task1" << std::endl;
-    std::vector<float> vec = {1.50f, 2.50f, 1.30f, 5.50f};
+    // TASK_1
 
-    putMinToEnd(vec);
-    findByKeyAndDelete(vec, 1.50f);
-    addAllMinMaxSum(vec);
+    std::deque<double> doubleDeque = {1.5, 2.9, 4.4, 3.7};
 
-    for (const auto &elt : vec)
+    insertElementAtPosition(doubleDeque, 2.9, 3);
+    removeElementFromDeque(doubleDeque, 1.5);
+    adjustElementsByDifference(doubleDeque);
+
+    for (const auto &elem : doubleDeque)
     {
-        std::cout << elt << std::endl;
+        std::cout << elem << " ";
     }
 
-    std::cout << "-----------------------------------" << std::endl;
+    std::cout << std::endl;
 
-    std::cout << "Task2" << std::endl;
-    std::vector<Pair> pairVec = {{1.50f, 2.50f}, {1.20f, 2.40f}, {1.10f, 2.30f}, {2.50f, 3.50f}, {2.00f, 3.00f}};
+    // TASK_2
 
-    putMinToEnd(pairVec);
-    findByKeyAndDelete(pairVec, {1.50f, 2.50f});
-    addAllMinMaxSum(pairVec);
+    std::deque<Time> timeDeque = {Time("11:54:16"), Time("17:23:10"), Time("4:35:25"), Time("20:00:00")};
 
-    for (const auto &elt : pairVec)
+    insertElementAtPosition(timeDeque, Time("11:54:16"), 3);
+    removeElementFromDeque(timeDeque, Time("17:23:10"));
+    adjustElementsByDifference(timeDeque);
+
+    for (const auto &elem : timeDeque)
     {
-        std::cout << elt << std::endl;
+        std::cout << elem << " ";
     }
 
-    std::cout << "-----------------------------------" << std::endl;
+    std::cout << std::endl;
 
-    std::cout << "Task3" << std::endl;
-    MyVector<Pair> myPairVec;
-    myPairVec.Add({1.50f, 2.50f});
-    myPairVec.Add({1.20f, 2.40f});
-    myPairVec.Add({1.10f, 2.30f});
-    myPairVec.Add({2.50f, 3.50f});
-    myPairVec.Add({2.00f, 3.00f});
+    // TASK_3
 
-    myPairVec.putMinToEnd();
-    myPairVec.findByKeyAndDelete({1.20f, 2.40f});
-    myPairVec.addAllMinMaxSum();
-    myPairVec.Print();
+    Vector<int> vector;
+    vector.app(5);
+    vector.app(0);
+    vector.app(7);
+    vector.app(4);
+    vector.app(8);
 
-    std::cout << "-----------------------------------" << std::endl;
+    vector.insertElementAtPosition(7, 3);
+    vector.eraseElement(7);
+    vector.subtractMaxMinDifference();
+    vector.print();
 
-    std::cout << "Task4" << std::endl;
-    MyQueue<Pair> myPairQueue;
-    myPairQueue.Add({1.50f, 2.50f});
-    myPairQueue.Add({1.20f, 2.40f});
-    myPairQueue.Add({1.10f, 2.30f});
-    myPairQueue.Add({2.50f, 3.50f});
+    // TASK_4
 
-    myPairQueue.putMinToEnd();
-    myPairQueue.findByKeyAndDelete({1.20f, 2.40f});
-    myPairQueue.addAllMinMaxSum();
-    myPairQueue.Print();
+    std::queue<Time> timeQueueOfTC;
 
-    return 0;
+    timeQueueOfTC.push(Time("12:44:11"));
+    timeQueueOfTC.push(Time("14:44:12"));
+    timeQueueOfTC.push(Time("1:48:10"));
+    timeQueueOfTC.push(Time("23:00:00"));
+
+    insertElementAtPosition(timeQueueOfTC, Time("14:44:12"), 2);
+    removeElement(timeQueueOfTC, Time("12:44:11"));
+    adjustElementsByDifference(timeQueueOfTC);
+
+    std::cout << "{ ";
+    while (!timeQueueOfTC.empty())
+    {
+        std::cout << timeQueueOfTC.front() << " ";
+        timeQueueOfTC.pop();
+    }
+    std::cout << "}" << std::endl;
+
+    // TASK_5
+
+    VectorOnPriorityQueue<int> vectorOnPQ;
+    vectorOnPQ.app(1);
+    vectorOnPQ.app(6);
+    vectorOnPQ.app(9);
+    vectorOnPQ.app(11);
+    vectorOnPQ.app(18);
+
+    vectorOnPQ.addElementAtPosition(9, 2);
+    vectorOnPQ.removeElement(6);
+    vectorOnPQ.subtractDifferenceMaxMin();
+
+    vectorOnPQ.print();
 }

@@ -6,9 +6,9 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 
 
-set(SOURCE_FILES  main.cpp)
+set(SOURCE_FILES  main.cpp Time.cpp)
 
-set(HEADER_FILES Pair.h MyQueue.h MyVector.h) 
+set(HEADER_FILES Time.h Vector.h VectorOnPriorityQueue.h) 
 
 set(ALL_SOURCES ${HEADER_FILES}
                 ${SOURCE_FILES})
