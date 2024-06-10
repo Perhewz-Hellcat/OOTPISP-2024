@@ -38,7 +38,7 @@ void adjustElementsByDifference(std::deque<T> &deq)
         T difference = *maxIt - *minIt;
 
         std::ranges::for_each(deq, [difference](T &elem)
-                              { elem -= difference; });
+                              { elem = elem- difference; });
     }
 }
 
