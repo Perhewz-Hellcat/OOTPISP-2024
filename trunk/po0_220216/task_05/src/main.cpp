@@ -38,7 +38,7 @@ void adjustElementsByDifference(std::deque<T> &deq)
         T difference = *maxIt - *minIt;
 
         std::ranges::for_each(deq, [difference](T &elem)
-                              { elem = elem- difference; });
+                              { elem = elem - difference; });
     }
 }
 
@@ -175,15 +175,15 @@ int main()
     // TASK_5
 
     VectorOnPriorityQueue<int> vectorOnPQ;
-    vectorOnPQ.app(1);
-    vectorOnPQ.app(6);
-    vectorOnPQ.app(9);
-    vectorOnPQ.app(11);
-    vectorOnPQ.app(18);
+    vectorOnPQ.application(1);
+    vectorOnPQ.application(6);
+    vectorOnPQ.application(9);
+    vectorOnPQ.application(11);
+    vectorOnPQ.application(18);
 
-    vectorOnPQ.addElementAtPosition(9, 2);
-    vectorOnPQ.removeElement(6);
-    vectorOnPQ.subtractDifferenceMaxMin();
+    vectorOnPQ.addPos(9, 2);
+    vectorOnPQ.deleteElm(6);
+    vectorOnPQ.subtractMinMax();
 
     vectorOnPQ.print();
 }

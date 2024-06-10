@@ -13,16 +13,16 @@ public:
     VectorOnPriorityQueue() = default;
     ~VectorOnPriorityQueue() = default;
 
-    void app(const T &value);
-    int size() const;
+    void application(const T &value);
+    int sizeVec() const;
 
     T front() const;
     auto operator*(const T value) const;
     void print() const;
 
-    void addElementAtPosition(const T &key, int position);
-    void removeElement(const T &key);
-    void subtractDifferenceMaxMin();
+    void addPos(const T &key, int position);
+    void deleteElm(const T &key);
+    void subtractMinMax();
 
 private:
     std::priority_queue<T> elements;
@@ -32,13 +32,13 @@ private:
 };
 
 template <typename T>
-void VectorOnPriorityQueue<T>::app(const T &value)
+void VectorOnPriorityQueue<T>::application(const T &value)
 {
     elements.push(value);
 }
 
 template <typename T>
-int VectorOnPriorityQueue<T>::size() const
+int VectorOnPriorityQueue<T>::sizeVec() const
 {
     return elements.size();
 }
@@ -52,13 +52,13 @@ T VectorOnPriorityQueue<T>::front() const
 }
 
 template <typename T>
-auto VectorOnPriorityQueue<T>::operator*(const T value) const
+auto VectorOnPriorityQueue<T>::operator*(const T val) const
 {
     VectorOnPriorityQueue<T> newVector;
 
     for (const auto &elem : toVector())
     {
-        newVector.app(elem * value);
+        newVector.app(elem * val);
     }
 
     return newVector;
@@ -78,7 +78,7 @@ void VectorOnPriorityQueue<T>::print() const
 }
 
 template <typename T>
-void VectorOnPriorityQueue<T>::addElementAtPosition(const T &key, int position)
+void VectorOnPriorityQueue<T>::addPos(const T &key, int pos)
 {
     std::vector<T> vec = toVector();
     auto it = std::ranges::find(vec.begin(), vec.end(), key);
@@ -86,15 +86,15 @@ void VectorOnPriorityQueue<T>::addElementAtPosition(const T &key, int position)
     if (it == vec.end())
         return;
 
-    if (position < 0 || position > vec.size())
+    if (pos < 0 || pos > vec.size())
         return;
 
-    vec.insert(vec.begin() + position, *it);
+    vec.insert(vec.begin() + pos, *it);
     fromVector(vec);
 }
 
 template <typename T>
-void VectorOnPriorityQueue<T>::removeElement(const T &key)
+void VectorOnPriorityQueue<T>::deleteElm(const T &key)
 {
     std::vector<T> vec = toVector();
     std::erase(vec, key);
@@ -102,7 +102,7 @@ void VectorOnPriorityQueue<T>::removeElement(const T &key)
 }
 
 template <typename T>
-void VectorOnPriorityQueue<T>::subtractDifferenceMaxMin()
+void VectorOnPriorityQueue<T>::subtractMinMax()
 {
     if (elements.empty())
         return;
