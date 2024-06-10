@@ -51,16 +51,14 @@ T VectorOnPriorityQueue<T>::front() const
     return T();
 }
 
-template <typename T>
+template <class T>
 auto VectorOnPriorityQueue<T>::operator*(const T value) const
 {
     VectorOnPriorityQueue<T> newVector;
-    auto vec = toVector() | std::views::transform([value](const T &elem)
-                                                  { return elem * value; });
 
-    for (const auto &elem : vec)
+    for (const auto &elem : toVector())
     {
-        newVector.app(elem);
+        newVector.app(elem * value);
     }
 
     return newVector;
@@ -79,20 +77,20 @@ void VectorOnPriorityQueue<T>::print() const
     std::cout << "}" << std::endl;
 }
 
-template <typename T>
-void VectorOnPriorityQueue<T>::addElementAtPosition(const T &key, int position)
+template <class T>
+std::vector<T> VectorOnPriorityQueue<T>::toVector() const
 {
-    auto vec = toVector();
-    auto it = std::ranges::find(vec.begin(), vec.end(), key);
+    std::vector<T> vec;
+    std::priority_queue<T> tempQueue = elements;
 
-    if (it == vec.end())
-        return;
+    while (!tempQueue.empty())
+    {
+        vec.push_back(tempQueue.top());
+        tempQueue.pop();
+    }
 
-    if (position < 0 || position > vec.size())
-        return;
-
-    vec.insert(vec.begin() + position, key);
-    fromVector(vec);
+    std::ranges::reverse(vec.begin(), vec.end());
+    return vec;
 }
 
 template <typename T>
