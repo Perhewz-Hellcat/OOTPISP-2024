@@ -127,7 +127,7 @@ std::vector<T> VectorOnPriorityQueue<T>::toVector() const
     }
 
     std::ranges::reverse(vect);
-    return vec;
+    return vect;
 }
 
 template <typename T>
