@@ -44,7 +44,8 @@ void Vector<T>::app(const T &other)
         elements = std::move(newElements);
         maxSize *= 2;
     }
-    (*elements)[currLength++] = other;
+    (*elements)[currLength] = other;
+    currLength++
 }
 
 template <typename T>

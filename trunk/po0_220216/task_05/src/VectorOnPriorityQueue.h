@@ -83,7 +83,7 @@ template <typename T>
 void VectorOnPriorityQueue<T>::addElementAtPosition(const T &key, int position)
 {
     auto vec = toVector();
-    auto it = std::ranges::find(vec, key);
+    auto it = std::ranges::find(vec.begin(), vec.end(), key);
 
     if (it == vec.end())
         return;
@@ -98,7 +98,7 @@ void VectorOnPriorityQueue<T>::addElementAtPosition(const T &key, int position)
 template <typename T>
 void VectorOnPriorityQueue<T>::removeElement(const T &key)
 {
-    auto vec = toVector();
+    std::vector<T> vec = toVector();
     std::erase(vec, key);
     fromVector(vec);
 }
@@ -109,7 +109,7 @@ void VectorOnPriorityQueue<T>::subtractDifferenceMaxMin()
     if (elements.empty())
         return;
 
-    auto vec = toVector();
+    std::vector<T> vec = toVector();
     T maxElement = *std::ranges::max_element(vec);
     T minElement = *std::ranges::min_element(vec);
     T difference = maxElement - minElement;
